@@ -3,8 +3,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select, column
 from Modelos.ProvinciaModelo import ProvinciaBd, ProvinciaSinId, ProvinciaApi
 
-
-
 class Provinciarepo():
     def get_all_provincias(self, session: Session):
         return session.execute(select(ProvinciaBd)).scalars().all()

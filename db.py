@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 DATABASE_URI = "postgresql+psycopg2://postgres:dfgedc@localhost:5432/geolocalizacion"
 

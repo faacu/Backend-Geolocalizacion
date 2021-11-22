@@ -12,13 +12,11 @@ repositorio = Provinciarepo()
 
 @provincias_router.get('/')
 def get_all(s: Session = Depends(get_session)):
-    """Devuelve una lista con todas las provincias"""
     return repositorio.get_all_provincias(s)
 
-@provincias_router.get('/sin_id', response_model=List[ProvinciaSinId])
-def get_provincia_sin_id(s: Session = Depends(get_session)):
-    """Devuelve una lista con todas las provincias sin incluir el Id"""
-    return repositorio.get_all_provincias(s)
+@provincias_router.get('/Buscar/{nombre}')
+def get_by_nombre(nombre:str, s:Session = Depends(get_session)):
+    return repositorio.provincia_por_nombre(nombre,s)
 
 @provincias_router.get('/{id}')
 def get_by_id(id: int, s:Session = Depends(get_session)):
@@ -26,10 +24,6 @@ def get_by_id(id: int, s:Session = Depends(get_session)):
     if provincia is None:
         raise HTTPException(status_code=404,detail="Provincia No Encontrada")
     return provincia
-
-@provincias_router.get('/Buscar/{nombre}')
-def get_by_nombre(nombre:str, s:Session = Depends(get_session)):
-    return repositorio.provincia_por_nombre(nombre,s)
 
 @provincias_router.post('/',response_model=ProvinciaApi)
 def agregar(datos: ProvinciaSinId, s:Session = Depends(get_session)):

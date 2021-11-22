@@ -13,13 +13,11 @@ repositorio = Paisrepo()
 
 @paises_router.get('/')
 def get_all(s: Session = Depends(get_session)):
-    """Devuelve una lista con todas las paises"""
     return repositorio.get_all_paises(s)
 
-@paises_router.get('/sin_id', response_model=List[PaisSinId])
-def get_pais_sin_id(s: Session = Depends(get_session)):
-    """Devuelve una lista con todas las paises sin incluir el Id"""
-    return repositorio.get_all_paises(s)
+@paises_router.get('/Buscar/{nombre}')
+def get_by_nombre(nombre:str, s:Session = Depends(get_session)):
+    return repositorio.pais_por_nombre(nombre,s)
 
 @paises_router.get('/{id}')
 def get_by_id(id: int, s:Session = Depends(get_session)):
@@ -27,10 +25,6 @@ def get_by_id(id: int, s:Session = Depends(get_session)):
     if pais is None:
         raise HTTPException(status_code=404,detail="Pais No Encontrado")
     return pais
-
-@paises_router.get('/Buscar/{nombre}')
-def get_by_nombre(nombre:str, s:Session = Depends(get_session)):
-    return repositorio.pais_por_nombre(nombre,s)
 
 @paises_router.post('/',response_model=PaisApi)
 def agregar(datos: PaisSinId, s:Session = Depends(get_session)):

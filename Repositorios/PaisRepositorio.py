@@ -10,6 +10,9 @@ class Paisrepo():
     def pais_por_nombre(self, nombre:str, session:Session):
         return session.execute(select(PaisBd).where(column('pa_nombre').ilike(f'%{nombre}%'))).scalars().all()
 
+    def pais_por_id(self, id:int, session:Session):
+        return session.execute(select(PaisBd).where(PaisBd.id == id)).scalar()
+
     def agregar(self, datos:PaisSinId, session:Session):
         instancia_bd = PaisBd(pa_nombre = datos.pa_nombre, cantidadHabitantes = datos.cantidadHabitantes)
         session.add(instancia_bd)
@@ -24,7 +27,7 @@ class Paisrepo():
             session.delete(instancia_bd)
             session.commit()
         except:
-            raise HTTPException(status_code=400, detail='No se puede borrar el pais. Posiblemente esta referenciada por otro registro')
+            raise HTTPException(status_code=400, detail='No se puede borrar el pais')
        
 
     def actualizar(self, id:int, datos:PaisSinId, session:Session):

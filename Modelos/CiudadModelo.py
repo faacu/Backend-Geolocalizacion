@@ -9,8 +9,8 @@ class CiudadBd(Base):
     id = Column(Integer, primary_key=True)
     ci_nombre = Column(String(80), nullable=False)
     descripcion = Column(String(500))
-    id_provincia = Column(Integer, ForeignKey('provincias.id'))
-    provincias = relationship('modelos.provincias_modelos.ProvinciaBd', lazy='joined')
+    provincias = relationship('Modelos.ProvinciaModelo.ProvinciaBd', lazy='joined')
+    id_provincia = Column(Integer, ForeignKey('Provincias.id'))
 
 class CiudadSinId(BaseModel):
     ci_nombre: str
@@ -19,7 +19,6 @@ class CiudadSinId(BaseModel):
 
     class Config:
         orm_mode = True
-
 
 class CiudadApi(CiudadSinId):
     id: int
